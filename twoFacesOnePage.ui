@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindowT</class>
+ <widget class="QMainWindow" name="MainWindowT">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>350</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>640</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+    <bold>true</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>TwoFacesOnePage</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="imparButton">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Selecciona el fichero pdf con la pagina impares</string>
+        </property>
+        <property name="text">
+         <string>Impar File</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="imparFile">
+        <property name="toolTip">
+         <string>Pdf con las paginas impares</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="parButton">
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Selecciona el fichero pdf con la pagina pares en orden inverso</string>
+        </property>
+        <property name="text">
+         <string>Par File</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="parFile">
+        <property name="toolTip">
+         <string>Pdf con las paginas pares en orden inverso</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="OutputButton">
+        <property name="toolTip">
+         <string>Selecciona la carpeta de destino para el nuevo fichero pdf combinado</string>
+        </property>
+        <property name="text">
+         <string>Output Dir</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="3">
+       <widget class="QLineEdit" name="outFile">
+        <property name="toolTip">
+         <string>Carpeta de destino</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="startButton">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>GoGoGooo</string>
+        </property>
+        <property name="text">
+         <string>Start</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="3">
+       <widget class="QProgressBar" name="progressBar">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="4">
+       <widget class="QListWidget" name="listWidget">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string>Acerca de ...</string>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <widget class="QMenu" name="menuAbout">
+    <property name="geometry">
+     <rect>
+      <x>269</x>
+      <y>128</y>
+      <width>274</width>
+      <height>72</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionTwoFacesOnePage_LeoCroms2023"/>
+   </widget>
+   <addaction name="menuAbout"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionTwoFacesOnePage_LeoCroms2023">
+   <property name="text">
+    <string>TwoFacesOnePage@LeoCroms2023</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>imparFile</sender>
+   <signal>editingFinished()</signal>
+   <receiver>imparFile</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>203</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>parFile</sender>
+   <signal>editingFinished()</signal>
+   <receiver>parFile</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>516</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>516</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>outFile</sender>
+   <signal>editingFinished()</signal>
+   <receiver>outFile</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>imparButton</sender>
+   <signal>clicked()</signal>
+   <receiver>imparButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>47</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>parButton</sender>
+   <signal>clicked()</signal>
+   <receiver>parButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OutputButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OutputButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>47</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>startButton</sender>
+   <signal>clicked()</signal>
+   <receiver>startButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>305</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>47</x>
+     <y>305</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
