@@ -16,26 +16,25 @@ Solo tienes que cargar un archivo con las páginas impares y otro con las págin
 un PDF de salida ordenado correctamente.
 LeoCroms@2023
 '''
-from PyQt6.QtWidgets import QMainWindow, QApplication
-import sys
+
+from PyQt6 import QtCore, QtGui, QtWidgets
 import os,time
 import PyPDF2
 import subprocess
 import winsound
-from PyQt6 import QtCore, QtGui, QtWidgets
 
-class MainWidget(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setObjectName("MainWindowT")
-        self.resize(640, 350)
-        self.setAcceptDrops(True)
-        self.setMinimumSize(QtCore.QSize(640, 350))
+
+
+class Ui_MainWindowT(object):
+    def setupUi(self, MainWindowT):
+        MainWindowT.setObjectName("MainWindowT")
+        MainWindowT.resize(640, 350)
+        MainWindowT.setMinimumSize(QtCore.QSize(640, 350))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
-        self.setFont(font)
-        self.centralwidget = QtWidgets.QWidget(parent=self)
+        MainWindowT.setFont(font)
+        self.centralwidget = QtWidgets.QWidget(parent=MainWindowT)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -92,8 +91,8 @@ class MainWidget(QMainWindow):
         self.listWidget.setObjectName("listWidget")
         self.gridLayout.addWidget(self.listWidget, 1, 0, 1, 4)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
-        self.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(parent=self)
+        MainWindowT.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(parent=MainWindowT)
         self.menubar.setEnabled(True)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 640, 23))
         font = QtGui.QFont()
@@ -110,16 +109,16 @@ class MainWidget(QMainWindow):
         self.menuAbout.setFont(font)
         self.menuAbout.setToolTip("")
         self.menuAbout.setObjectName("menuAbout")
-        self.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(parent=self)
+        MainWindowT.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(parent=MainWindowT)
         self.statusbar.setObjectName("statusbar")
-        self.setStatusBar(self.statusbar)
-        self.actionTwoFacesOnePage_LeoCroms2023 = QtGui.QAction(parent=self)
+        MainWindowT.setStatusBar(self.statusbar)
+        self.actionTwoFacesOnePage_LeoCroms2023 = QtGui.QAction(parent=MainWindowT)
         self.actionTwoFacesOnePage_LeoCroms2023.setObjectName("actionTwoFacesOnePage_LeoCroms2023")
         self.menuAbout.addAction(self.actionTwoFacesOnePage_LeoCroms2023)
         self.menubar.addAction(self.menuAbout.menuAction())
 
-        self.retranslateUi(self)
+        self.retranslateUi(MainWindowT)
         self.imparFile.editingFinished.connect(self.imparFile_edit) # type: ignore
         self.parFile.editingFinished.connect(self.parFile_edit) # type: ignore
         self.outFile.editingFinished.connect(self.outFile_edit) # type: ignore
@@ -134,11 +133,11 @@ class MainWidget(QMainWindow):
         checkImpar = False
         checkPar = False
         checkDir = False
-        QtCore.QMetaObject.connectSlotsByName(self)
+        QtCore.QMetaObject.connectSlotsByName(MainWindowT)
 
     def retranslateUi(self, MainWindowT):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle (_translate("MainWindowT", "TwoFacesOnePage"))
+        MainWindowT.setWindowTitle(_translate("MainWindowT", "TwoFacesOnePage"))
         self.imparButton.setToolTip(_translate("MainWindowT", "Selecciona el fichero pdf con la pagina impares"))
         self.imparButton.setText(_translate("MainWindowT", "Impar File"))
         self.imparFile.setToolTip(_translate("MainWindowT", "Pdf con las paginas impares"))
@@ -330,23 +329,14 @@ class MainWidget(QMainWindow):
 
 
 
-    
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls():
-            #print(event)
-            event.accept()
-        else:
-            event.ignore()
-
-    def dropEvent(self, event):
-        files = [u.toLocalFile() for u in event.mimeData().urls()]
-        print (len(files))
-        for f in files:
-            print(f,os.path.getctime(f))
+        
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ui = MainWidget()
-    ui.show()
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindowT = QtWidgets.QMainWindow()
+    ui = Ui_MainWindowT()
+    ui.setupUi(MainWindowT)
+    MainWindowT.show()
     sys.exit(app.exec())
