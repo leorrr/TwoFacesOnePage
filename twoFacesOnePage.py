@@ -160,9 +160,11 @@ class MainWidget(QMainWindow):
         global checkPar
         global checkDir
         imparfilename = QtWidgets.QFileDialog.getOpenFileName(None,'Selecciona Fichero con las paginas impares',None,("Pdf Files (*.pdf)"))
-        if imparfilename[0] != "" :
-            imparbasename= os.path.split(imparfilename[0])
-            self.imparFile.setText(imparfilename[0])
+        imparfilename=imparfilename[0]
+        if imparfilename != "" :
+            
+            imparbasename= os.path.split(imparfilename)
+            self.imparFile.setText(imparfilename)
             self.listWidget.addItem(f"El fichero con las paginas impares es {imparbasename[1]}")
             self.listWidget.scrollToBottom()
             checkImpar=True
@@ -170,7 +172,7 @@ class MainWidget(QMainWindow):
             if ((checkImpar and checkPar and checkDir)==True): self.startButton.setEnabled(True)
 
         else:
-            self.imparFile.setText(imparfilename[0])
+            self.imparFile.setText(imparfilename)
             self.listWidget.addItem("No se ha seleccionado ningun fichero")
             self.listWidget.scrollToBottom()
             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
@@ -185,17 +187,19 @@ class MainWidget(QMainWindow):
         global checkPar
         global checkDir
         parfilename= QtWidgets.QFileDialog.getOpenFileName(None,'Selecciona Fichero con las paginas pares',None,("Pdf Files (*.pdf)"))
-        if parfilename[0]!="":
+        parfilename=parfilename[0]
+        if parfilename!="":
+            
 
-            parbasename=os.path.split(parfilename[0])
-            self.parFile.setText(parfilename[0])
+            parbasename=os.path.split(parfilename)
+            self.parFile.setText(parfilename)
             self.listWidget.addItem(f"El fichero con las paginas pares es {parbasename[1]}")
             self.listWidget.scrollToBottom()
             checkPar= True
             self.progressBar.setProperty("value", 0)
             if (checkImpar==True and checkPar == True and checkDir==True): self.startButton.setEnabled(True)
         else:
-            self.parFile.setText(parfilename[0])
+            self.parFile.setText(parfilename)
             self.listWidget.addItem("No se ha seleccionado ningun fichero")
             self.listWidget.scrollToBottom()
             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
@@ -232,11 +236,9 @@ class MainWidget(QMainWindow):
         
 
     def startButton_click(self):
-        try:
-
-
-            pdf_file1 = open(imparfilename[0],'rb')
-            pdf_file2 = open(parfilename[0],'rb')
+        try:  
+            pdf_file1 = open(self.imparFile.text(),'rb')
+            pdf_file2 = open(self.parFile.text(),'rb')
             imparPdfFile=PyPDF2.PdfReader(pdf_file1)
             parPdfFile=PyPDF2.PdfReader(pdf_file2)
             finalPdfFile=PyPDF2.PdfWriter()
@@ -270,7 +272,6 @@ class MainWidget(QMainWindow):
         
     
     def imparFile_edit(self):
-        global dirname
         global checkImpar
         global checkPar
         global checkDir
@@ -293,6 +294,14 @@ class MainWidget(QMainWindow):
         pass
     
     def parFile_edit(self):
+         
+         #global dirname
+        global checkImpar
+        global checkPar
+        global checkDir
+
+
+
         if os.path.exists(self.parFile.text())==True:
             parfilename=self.parFile.text()
             self.listWidget.addItem(f"El fichero con las paginas pares es: {self.parFile.text()}")
@@ -333,16 +342,57 @@ class MainWidget(QMainWindow):
     
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
-            #print(event)
+           
             event.accept()
         else:
             event.ignore()
 
     def dropEvent(self, event):
+        
+        global checkImpar
+        global checkPar
+        global checkDir
+        global parfilename
+        global imparfilename
+        
         files = [u.toLocalFile() for u in event.mimeData().urls()]
-        print (len(files))
+        
         for f in files:
-            print(f,os.path.getctime(f))
+            #print(f,os.path.getctime(f))
+            if (checkImpar==False):
+                imparbasename= os.path.split(f)
+                #print (imparbasename)
+                #print (imparbasename[0],imparbasename[1])
+                imparfilename=f
+                self.imparFile.setText(imparfilename)
+                self.listWidget.addItem(f"El fichero con las paginas impares es {imparbasename[1]}")
+                self.listWidget.scrollToBottom()
+                checkImpar=True
+                self.progressBar.setProperty("value", 0)
+               
+
+            elif (checkPar==False):
+                parbasename=os.path.split(f)
+                parfilename=f
+                self.parFile.setText(parfilename)
+                self.listWidget.addItem(f"El fichero con las paginas pares es {parbasename[1]}")
+                self.listWidget.scrollToBottom()
+                checkPar= True
+                self.progressBar.setProperty("value", 0)
+               
+            if ((checkImpar and checkPar)==True):
+                if (os.path.getctime(imparfilename)>(os.path.getctime(parfilename))):
+                    self.imparFile.setText(parfilename)
+                    self.parFile.setText(imparfilename)
+                    self.listWidget.addItem(f"Correccion automatica, ficheros de entrada intercambiados")
+                    self.listWidget.scrollToBottom()
+
+
+
+            
+
+        if ((checkImpar and checkPar and checkDir)==True): self.startButton.setEnabled(True)
+
 
 
 if __name__ == '__main__':
